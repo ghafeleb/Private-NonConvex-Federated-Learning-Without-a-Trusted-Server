@@ -1,11 +1,11 @@
-Requirements:
-Python 3.6.8
-numpy 1.19.4+mkl
-torchvision 0.3.0
-torch 1.1.0
-scikit-learn 0.24.2
-scipy 1.5.4
-matlabengineforpython R2018a
+## Requirements:
+- Python 3.6.8
+- numpy 1.19.4+mkl
+- torchvision 0.3.0
+- torch 1.1.0
+- scikit-learn 0.24.2
+- scipy 1.5.4
+- matlabengineforpython R2018a
 
 As noises are generated using MATLAB, installed MATLAB on the system is required. noise_generator_localSGD2.m is used to generate noises for noisy local SGD and no modification is required for it. main_FL.m calls the function from noise_generator.m to generate the noise for noisy SPIDER and noisy minibatch SGD. List of epsilons, list of clipping thresholds (Ls), n, list of R values (Rs), and M should be modifies based on the experiment setting.
 
