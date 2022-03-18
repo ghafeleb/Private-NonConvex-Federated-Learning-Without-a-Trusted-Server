@@ -1,5 +1,4 @@
-<img alt="Non-Convex Local Differential Privacy Diagram" src="https://github.com/ghafeleb/Private-NonConvex-Federated-Learning-Without-a-Trusted-Server/blob/master/figures/NC_LDP_diagram_v2.png" align="center" width="400">
-
+<a href="https://github.com/ghafeleb/Private-NonConvex-Federated-Learning-Without-a-Trusted-Server/blob/master/figures/NC_LDP_diagram_v2.png"><img src="https://github.com/ghafeleb/Private-NonConvex-Federated-Learning-Without-a-Trusted-Server/blob/master/figures/NC_LDP_diagram_v2.png" align="center" width="400" ></a>
 This repository contains the implementations for the following paper:\
 Andrew Lowy, Ali Ghafelebashi, Meisam Razaviyayn, [Private Non-Convex Federated Learning Without a Trusted Server(https://arxiv.org/abs/2110.11205.pdf), arXiv 2022.
 
