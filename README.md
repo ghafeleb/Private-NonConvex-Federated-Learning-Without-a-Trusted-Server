@@ -25,7 +25,7 @@ As noises are generated using MATLAB, installed MATLAB on the system is required
 ## Model Training:
 Run the code with the following command:
 ```bash
-python DP_FL.py
+python DP_FL.py --model=MLP --gpu=-1 --clipping=1 --num_classes=2 --dH=64
 ```
 
 ## Citation
