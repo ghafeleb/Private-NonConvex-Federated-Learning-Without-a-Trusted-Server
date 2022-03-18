@@ -1,4 +1,4 @@
-![Non-Convex Local Differential Privacy Diagram](figures/NC_LDP_diagram_v2.png "Non-Convex Local Differential Privacy Diagram"){:height="36px" width="36px"}
+![Non-Convex Local Differential Privacy Diagram](figures/NC_LDP_diagram_v2.png "Non-Convex Local Differential Privacy Diagram" {:height="36px" width="36px"})
 
 This repository contains the implementations for the following paper:\
 Andrew Lowy, Ali Ghafelebashi, Meisam Razaviyayn, [Private Non-Convex Federated Learning Without a Trusted Server(https://arxiv.org/abs/2110.11205.pdf), arXiv 2022.
