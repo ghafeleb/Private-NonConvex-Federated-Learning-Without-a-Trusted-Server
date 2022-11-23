@@ -25,13 +25,3 @@ Run the code with the following command:
 python DP_FL.py --model=MLP --gpu=-1 --clipping=1 --num_classes=2 --dH=64
 ```
 
-## Citation
-If you find this repository useful in your research, please cite the following paper:
-```
-@article{lowy2022private,
-  title={Private Non-Convex Federated Learning Without a Trusted Server},
-  author={Lowy, Andrew and Ghafelebashi, Ali and Razaviyayn, Meisam},
-  journal={arXiv preprint arXiv:2203.06735},
-  year={2022}
-}
-```
