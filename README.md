@@ -22,11 +22,11 @@ If you want to generate noises using MATLAB, installed MATLAB on the system is r
 ## Model Training:
 To train the model with generated noises by MATLAB, run the code with the following command:
 ```bash
-python DP_FL.py --model=MLP --gpu=-1 --clipping=1 --num_classes=2 --dH=64
+python DP_FL.py 
 ```
 
 To train the model with generated noises by Python, run the code with the following command:
 ```bash
-python DP_FL2.py --model=MLP --gpu=-1 --clipping=1 --num_classes=2 --dH=64
+python DP_FL2.py 
 ```
 
