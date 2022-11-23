@@ -17,11 +17,16 @@ Use the follwoing command to install the dependencies:
 ```bash
 pip install -r requirements.txt
 ```
-As noises are generated using MATLAB, installed MATLAB on the system is required. 
+If you want to generate noises using MATLAB, installed MATLAB on the system is required. 
 
 ## Model Training:
-Run the code with the following command:
+To train the model with generated noises by MATLAB, run the code with the following command:
 ```bash
 python DP_FL.py --model=MLP --gpu=-1 --clipping=1 --num_classes=2 --dH=64
+```
+
+To train the model with generated noises by Python, run the code with the following command:
+```bash
+python DP_FL2.py --model=MLP --gpu=-1 --clipping=1 --num_classes=2 --dH=64
 ```
 
