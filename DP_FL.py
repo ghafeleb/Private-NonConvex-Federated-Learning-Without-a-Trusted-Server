@@ -1003,16 +1003,9 @@ def main(args):
                         # print('Epsilon: {:.5f}, Stepsize: {:.5f}, L: {:.5f}'.format(eps, stepsize, L))
                         net_noisy_SPIDER = torch.load(mlp_noisy_SPIDER_path + ".pt")
                         noisySPIDER_train_accuracy[(eps, stepsize, L)], noisySPIDER_train_errors[(eps, stepsize, L)] = test_err(net_noisy_SPIDER, train_features, train_labels, args)
-                        # print(f"eps={eps}, noisySPIDER_train_accuracy[(eps, stepsize, L)]: {noisySPIDER_train_accuracy[(eps, stepsize, L)]}, noisySPIDER_test_errors[(eps, stepsize, L)]: {noisySPIDER_test_errors[(eps, stepsize, L)]}")
+                        print(f"eps={eps}, noisySPIDER_train_accuracy[(eps, stepsize, L)]: {noisySPIDER_train_accuracy[(eps, stepsize, L)]}, noisySPIDER_test_errors[(eps, stepsize, L)]: {noisySPIDER_test_errors[(eps, stepsize, L)]}")
                         noisySPIDER_test_accuracy[(eps, stepsize, L)], noisySPIDER_test_errors[(eps, stepsize, L)] = test_err(net_noisy_SPIDER, test_features, test_labels, args)
-                        # print(f"eps={eps}, noisySPIDER_test_accuracy[(eps, stepsize, L)]: {noisySPIDER_test_accuracy[(eps, stepsize, L)]}, noisySPIDER_train_errors[(eps, stepsize, L)]: {noisySPIDER_train_errors[(eps, stepsize, L)]}")
-                        if noisySPIDER_best_train_accuracy[eps] < noisySPIDER_train_accuracy[(eps, stepsize, L)]:
-                            noisySPIDER_best_train_accuracy[eps] = noisySPIDER_train_accuracy[(eps, stepsize, L)]
-                        if noisySPIDER_best_test_accuracy[eps] < noisySPIDER_test_accuracy[(eps, stepsize, L)]:
-                            noisySPIDER_best_test_accuracy[eps] = noisySPIDER_test_accuracy[(eps, stepsize, L)]
-                for eps in epsilons:
-                    print(f"eps={eps}, noisySPIDER_best_test_accuracy[{eps}]: {noisySPIDER_best_test_accuracy[eps]}")
-                    print(f"eps={eps}, noisySPIDER_best_train_accuracy[{eps}]: {noisySPIDER_best_train_accuracy[eps]}")
+                        print(f"eps={eps}, noisySPIDER_test_accuracy[(eps, stepsize, L)]: {noisySPIDER_test_accuracy[(eps, stepsize, L)]}, noisySPIDER_train_errors[(eps, stepsize, L)]: {noisySPIDER_train_errors[(eps, stepsize, L)]}")
 
 
             if 12 in models2run and checkAccuracy:
@@ -1027,16 +1020,11 @@ def main(args):
                         net_SPIDER = torch.load(mlp_SPIDER_path + ".pt")
                         # train data
                         SPIDER_train_accuracy[(stepsize, L)], SPIDER_train_errors[(stepsize, L)] = test_err(net_SPIDER, train_features, train_labels, args)
-                        # print(f"SPIDER_train_accuracy[(stepsize, L)]: {SPIDER_train_accuracy[(stepsize, L)]}, SPIDER_test_errors[(stepsize, L)]: {SPIDER_test_errors[(stepsize, L)]}")
+                        print(f"SPIDER_train_accuracy[(stepsize, L)]: {SPIDER_train_accuracy[(stepsize, L)]}, SPIDER_test_errors[(stepsize, L)]: {SPIDER_test_errors[(stepsize, L)]}")
                         # test data
                         SPIDER_test_accuracy[(stepsize, L)], SPIDER_test_errors[(stepsize, L)] = test_err(net_SPIDER, test_features, test_labels, args)
-                        # print(f"SPIDER_test_accuracy[(stepsize, L)]: {SPIDER_test_accuracy[(stepsize, L)]}, SPIDER_train_errors[(stepsize, L)]: {SPIDER_train_errors[(stepsize, L)]}")
-                        if SPIDER_best_train_accuracy < SPIDER_train_accuracy[(stepsize, L)]:
-                            SPIDER_best_train_accuracy = SPIDER_train_accuracy[(stepsize, L)]
-                        if SPIDER_best_test_accuracy < SPIDER_test_accuracy[(stepsize, L)]:
-                            SPIDER_best_test_accuracy = SPIDER_test_accuracy[(stepsize, L)]
-                print(f"\n\nSPIDER_best_test_accuracy: {SPIDER_best_test_accuracy}")
-                print(f"SPIDER_best_train_accuracy: {SPIDER_best_train_accuracy}")
+                        print(f"SPIDER_test_accuracy[(stepsize, L)]: {SPIDER_test_accuracy[(stepsize, L)]}, SPIDER_train_errors[(stepsize, L)]: {SPIDER_train_errors[(stepsize, L)]}")
+
 
 
             if 21 in models2run and checkAccuracy:
@@ -1053,17 +1041,12 @@ def main(args):
                         net_noisy_MB_sgd = torch.load(mlp_noisy_MB_sgd_path + ".pt")
 
                         noisyMB_train_accuracy[(eps, stepsize, L)], noisyMB_train_errors[(eps, stepsize, L)] = test_err(net_noisy_MB_sgd, train_features, train_labels, args)
-                        # print(f"eps={eps}, noisyMB_train_accuracy[(eps, stepsize, L)]: {noisyMB_train_accuracy[(eps, stepsize, L)]}, noisyMB_test_errors[(eps, stepsize, L)]: {noisyMB_test_errors[(eps, stepsize, L)]}")
+                        print(f"eps={eps}, noisyMB_train_accuracy[(eps, stepsize, L)]: {noisyMB_train_accuracy[(eps, stepsize, L)]}, noisyMB_test_errors[(eps, stepsize, L)]: {noisyMB_test_errors[(eps, stepsize, L)]}")
 
                         noisyMB_test_accuracy[(eps, stepsize, L)], noisyMB_test_errors[(eps, stepsize, L)] = test_err(net_noisy_MB_sgd, test_features, test_labels, args)
-                        # print(f"eps={eps}, noisyMB_test_accuracy[(eps, stepsize, L)]: {noisyMB_test_accuracy[(eps, stepsize, L)]}, noisyMB_train_errors[(eps, stepsize, L)]: {noisyMB_train_errors[(eps, stepsize, L)]}")
-                        if noisyMB_best_train_accuracy[eps] < noisyMB_train_accuracy[(eps, stepsize, L)]:
-                            noisyMB_best_train_accuracy[eps] = noisyMB_train_accuracy[(eps, stepsize, L)]
-                        if noisyMB_best_test_accuracy[eps] < noisyMB_test_accuracy[(eps, stepsize, L)]:
-                            noisyMB_best_test_accuracy[eps] = noisyMB_test_accuracy[(eps, stepsize, L)]
-                for eps in epsilons:
-                    print(f"\n\neps={eps}, noisyMB_best_test_accuracy[{eps}]: {noisyMB_best_test_accuracy[eps]}")
-                    print(f"eps={eps}, noisyMB_best_train_accuracy[{eps}]: {noisyMB_best_train_accuracy[eps]}")
+                        print(f"eps={eps}, noisyMB_test_accuracy[(eps, stepsize, L)]: {noisyMB_test_accuracy[(eps, stepsize, L)]}, noisyMB_train_errors[(eps, stepsize, L)]: {noisyMB_train_errors[(eps, stepsize, L)]}")
+
+
 
 
             if 22 in models2run and checkAccuracy:
@@ -1078,16 +1061,11 @@ def main(args):
                         net_MB_sgd = torch.load(mlp_MB_sgd_path + ".pt")
                         # train data
                         MB_train_accuracy[(stepsize, L)], MB_train_errors[(stepsize, L)] = test_err(net_MB_sgd, train_features, train_labels, args)
-                        # print(f"MB_train_accuracy[(stepsize, L)]: {MB_train_accuracy[(stepsize, L)]}, MB_test_errors[(stepsize, L)]: {MB_test_errors[(stepsize, L)]}")
+                        print(f"MB_train_accuracy[(stepsize, L)]: {MB_train_accuracy[(stepsize, L)]}, MB_test_errors[(stepsize, L)]: {MB_test_errors[(stepsize, L)]}")
                         # test data
                         MB_test_accuracy[(stepsize, L)], MB_test_errors[(stepsize, L)] = test_err(net_MB_sgd, test_features, test_labels, args)
-                        # print(f"MB_test_accuracy[(stepsize, L)]: {MB_test_accuracy[(stepsize, L)]}, MB_train_errors[(stepsize, L)]: {MB_train_errors[(stepsize, L)]}")
-                        if MB_best_train_accuracy < MB_train_accuracy[(stepsize, L)]:
-                            MB_best_train_accuracy = MB_train_accuracy[(stepsize, L)]
-                        if MB_best_test_accuracy < MB_test_accuracy[(stepsize, L)]:
-                            MB_best_test_accuracy = MB_test_accuracy[(stepsize, L)]
-                print(f"\n\nMB_best_test_accuracy: {MB_best_test_accuracy}")
-                print(f"MB_best_train_accuracy: {MB_best_train_accuracy}")
+                        print(f"MB_test_accuracy[(stepsize, L)]: {MB_test_accuracy[(stepsize, L)]}, MB_train_errors[(stepsize, L)]: {MB_train_errors[(stepsize, L)]}")
+
 
 
             if 31 in models2run and checkAccuracy:
@@ -1105,19 +1083,12 @@ def main(args):
                             net_noisy_local_sgd = torch.load(mlp_noisy_local_sgd_path + ".pt")
 
                             noisylocal_train_accuracy[(eps, stepsize, L)], noisylocal_train_errors[(eps, stepsize, L)] = test_err(net_noisy_local_sgd, train_features, train_labels, args)
-                            # print(f"eps={eps}, noisylocal_train_accuracy[(eps, stepsize, L)]: {noisylocal_train_accuracy[(eps, stepsize, L)]}, noisylocal_test_errors[(eps, stepsize, L)]: {noisylocal_test_errors[(eps, stepsize, L)]}")
+                            print(f"eps={eps}, noisylocal_train_accuracy[(eps, stepsize, L)]: {noisylocal_train_accuracy[(eps, stepsize, L)]}, noisylocal_test_errors[(eps, stepsize, L)]: {noisylocal_test_errors[(eps, stepsize, L)]}")
 
                             noisylocal_test_accuracy[(eps, stepsize, L)], noisylocal_test_errors[(eps, stepsize, L)] = test_err(net_noisy_local_sgd, test_features, test_labels, args)
-                            # print(f"eps={eps}, noisylocal_test_accuracy[(eps, stepsize, L)]: {noisylocal_test_accuracy[(eps, stepsize, L)]}, noisylocal_train_errors[(eps, stepsize, L)]: {noisylocal_train_errors[(eps, stepsize, L)]}")
-                            if noisylocal_best_train_accuracy[eps] < noisylocal_train_accuracy[(eps, stepsize, L)]:
-                                noisylocal_best_train_accuracy[eps] = noisylocal_train_accuracy[(eps, stepsize, L)]
-                            if noisylocal_best_test_accuracy[eps] < noisylocal_test_accuracy[(eps, stepsize, L)]:
-                                noisylocal_best_test_accuracy[eps] = noisylocal_test_accuracy[(eps, stepsize, L)]
+                            print(f"eps={eps}, noisylocal_test_accuracy[(eps, stepsize, L)]: {noisylocal_test_accuracy[(eps, stepsize, L)]}, noisylocal_train_errors[(eps, stepsize, L)]: {noisylocal_train_errors[(eps, stepsize, L)]}")
                         except:
                             continue
-                for eps in epsilons:
-                    print(f"\n\neps={eps}, noisylocal_best_test_accuracy[{eps}]: {noisylocal_best_test_accuracy[eps]}")
-                    print(f"eps={eps}, noisylocal_best_train_accuracy[{eps}]: {noisylocal_best_train_accuracy[eps]}")
 
 
             if 32 in models2run and checkAccuracy:
@@ -1133,19 +1104,12 @@ def main(args):
                             net_local_sgd = torch.load(mlp_local_sgd_path + ".pt")
                             # train data
                             local_train_accuracy[(stepsize, L)], local_train_errors[(stepsize, L)] = test_err(net_local_sgd, train_features, train_labels, args)
-                            # print(f"local_train_accuracy[(stepsize, L)]: {local_train_accuracy[(stepsize, L)]}, local_test_errors[(stepsize, L)]: {local_test_errors[(stepsize, L)]}")
+                            print(f"local_train_accuracy[(stepsize, L)]: {local_train_accuracy[(stepsize, L)]}, local_test_errors[(stepsize, L)]: {local_test_errors[(stepsize, L)]}")
                             # test data
                             local_test_accuracy[(stepsize, L)], local_test_errors[(stepsize, L)] = test_err(net_local_sgd, test_features, test_labels, args)
-                            # print(f"local_test_accuracy[(stepsize, L)]: {local_test_accuracy[(stepsize, L)]}, local_train_errors[(stepsize, L)]: {local_train_errors[(stepsize, L)]}")
-                            if local_best_train_accuracy < local_train_accuracy[(stepsize, L)]:
-                                local_best_train_accuracy = local_train_accuracy[(stepsize, L)]
-                            if local_best_test_accuracy < local_test_accuracy[(stepsize, L)]:
-                                local_best_test_accuracy = local_test_accuracy[(stepsize, L)]
+                            print(f"local_test_accuracy[(stepsize, L)]: {local_test_accuracy[(stepsize, L)]}, local_train_errors[(stepsize, L)]: {local_train_errors[(stepsize, L)]}")
                         except:
                             continue
-                print(f"\n\nlocal_best_test_accuracy: {local_best_test_accuracy}")
-                print(f"local_best_train_accuracy: {local_best_train_accuracy}")
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
