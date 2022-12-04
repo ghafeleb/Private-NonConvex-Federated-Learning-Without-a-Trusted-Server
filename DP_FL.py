@@ -854,36 +854,7 @@ def main(args):
         noisySPIDER_train_errors[(eps, stepsize, L) ] = 0
         noisySPIDER_test_accuracy[(eps, stepsize, L)] = 0
         noisySPIDER_train_accuracy[(eps, stepsize, L) ] = 0
-    #keep track of train excess risk too
-    # Local sgd
-    local_best_test_accuracy = -1
-    local_best_train_accuracy = -1
-    # MB sgd
-    MB_best_test_accuracy = -1
-    MB_best_train_accuracy = -1
-    # SPIDER
-    SPIDER_best_test_accuracy = -1
-    SPIDER_best_train_accuracy = -1
 
-    # Noisy local sgd
-    noisylocal_best_test_accuracy = {}
-    noisylocal_best_train_accuracy = {}
-    # Noisy MB sgd
-    noisyMB_best_test_accuracy = {}
-    noisyMB_best_train_accuracy = {}
-    # Noisy SPIDER
-    noisySPIDER_best_test_accuracy = {}
-    noisySPIDER_best_train_accuracy = {}
-    for eps in epsilons:
-        # Noisy local sgd
-        noisylocal_best_test_accuracy[eps] = -1
-        noisylocal_best_train_accuracy[eps] = -1
-        # Noisy MB sgd
-        noisyMB_best_test_accuracy[eps] = -1
-        noisyMB_best_train_accuracy[eps] = -1
-        # Noisy SPIDER
-        noisySPIDER_best_test_accuracy[eps] = -1
-        noisySPIDER_best_train_accuracy[eps] = -1
 
     if DO_COMPUTE:
         for trial in range(num_trials):
