@@ -792,6 +792,38 @@ def trainModel(args, settings, K, seedData, delta, n, train_features, train_labe
             if success == 'converged': saveNet(net, model_path, l)
 
 
+def testModel(args, settings, K, seedData, train_features, train_labels, test_features, test_labels, test_err, dfResult):
+    if args.saveSummary:
+        settingsLoop = settings
+    else:
+        settingsLoop = settings
+    checked_accuracies = set()
+    for (modelIdx, eps, stepsize, stepsize_local, L, qR) in settingsLoop:
+        if modelIdx in [11, 21, 12, 22, 41, 42]:
+            stepsize_local = 0
+        print("Setting: [seedData, modelIdx, eps, stepsize, stepsize_local, L, qR] ", seedData, modelIdx, eps, stepsize, stepsize_local, L, qR)
+        algName = getAlgoName(modelIdx)
+        path_temp = getAddress(args, eps, modelIdx, K, L, stepsize, stepsize_local, seedData, qR)
+        model_path = os.path.join('models', path_temp)
+        if (os.path.exists(model_path + ".pt")) and (model_path not in checked_accuracies):
+            checked_accuracies.add(model_path)
+            print('\n', model_path)
+            net = torch.load(model_path + ".pt", map_location=args.device)
+            train_accuracy, train_errors = test_err(net, train_features, train_labels, args)
+            test_accuracy, test_errors = test_err(net, test_features, test_labels, args)
+            print(f"{algName}, train data, eps: {eps}, stepsize: {stepsize}, stepsize_local: {stepsize_local}, L: {L}, qR: {qR}, \n\tAccuracy: {train_accuracy}")
+            print(f"{algName}, test data, eps: {eps}, stepsize: {stepsize}, stepsize_local: {stepsize_local}, L: {L}, qR: {qR}, , \n\t Accuracy: {test_accuracy}")
+
+            dfResultTrain = {'algorithm': algName, 'data': args.data, 'train_test': 'train', 'eps': eps,
+                             'stepsize': stepsize, 'stepsize_local': stepsize_local, 'L': L, 'qR': qR, 'seedData': seedData, 'accuracy': train_accuracy}
+            dfResult = dfResult.append(dfResultTrain, ignore_index=True)
+            dfResultTest = {'algorithm': algName, 'data': args.data, 'train_test': 'test', 'eps': eps,
+                            'stepsize': stepsize, 'stepsize_local': stepsize_local, 'L': L, 'qR': qR, 'seedData': seedData, 'accuracy': test_accuracy}
+            dfResult = dfResult.append(dfResultTest, ignore_index=True)
+        else:
+            print('Skipped\n')
+    return dfResult
+
 ##################################################################################################################
 def main(args, seed):
     args.device = torch.device('cuda' if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
@@ -825,6 +857,9 @@ def main(args, seed):
     settings = getSettings(args)
     print(f'Length of settings: {len(settings)}')
     trainModel(args, settings, K, seedData, delta, n, train_features, train_labels)
+
+    dfResult = pd.DataFrame(columns=['algorithm', 'train_test', 'eps', 'stepsize', 'stepsize_local', 'L'])
+    dfResult = testModel(args, settings, K, seedData, train_features, train_labels, test_features, test_labels, test_err, dfResult)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
