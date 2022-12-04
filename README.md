@@ -12,6 +12,7 @@ The code and experiments to reproduce our numerical results are provided in this
 - scikit-learn 0.24.2
 - scipy 1.5.4
 - matlabengineforpython R2018a
+- pandas
 
 Use the follwoing command to install the dependencies:
 ```bash
