@@ -245,3 +245,122 @@ class MLPCrossEntropyBC(nn.Module):
         x = self.relu(x)
         x = self.layer_hidden1(x)
         return x
+    
+    
+ 
+def load_MNIST2(args, seedData, path, dimPCA=50, doPCA=True):
+    np.random.seed(seedData)
+    if path not in os.listdir('./data'):
+        os.mkdir('./data/' + path)
+    # if data folder is not there, make one and download/preprocess mnist:
+    if 'processed_mnist_features_{:d}.npy'.format(dimPCA) not in os.listdir('./data/' + path):
+        # convert image to tensor and normalize (mean 0, std dev 1):
+        transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.,), (1.,)), ])
+        # download and store transformed dataset as variable mnist:
+        mnist = datasets.MNIST('data', download=True, train=True, transform=transform)
+        # separate features from labels and reshape features to be 1D array:
+        features = np.array([np.array(mnist[i][0]).reshape(-1) for i in range(len(mnist))])
+        labels = np.array([mnist[i][1] for i in range(len(mnist))])
+        # apply PCA to features to reduce dimensionality to dimPCA
+        if doPCA:
+            features = PCA(n_components=dimPCA).fit_transform(features)
+        # save processed features in "data" folder:
+        np.save('data/' + path + '/processed_mnist_features_{:d}.npy'.format(dimPCA), features)
+        np.save('data/' + path + '/processed_mnist_labels_{:d}.npy'.format(dimPCA), labels)
+    # else (data is already there), load data:
+    else:
+        features = np.load('data/' + path + '/processed_mnist_features_{:d}.npy'.format(dimPCA))
+        labels = np.load('data/' + path + '/processed_mnist_labels_{:d}.npy'.format(dimPCA))
+
+    ## Group the data by digit
+    # n_m = smallest number of occurences of any one digit (label) in mnist:
+    n_m = int(min([np.sum(labels == i) for i in range(10)]) * args.q_pct_of_data)  # smaller scale version
+    # use defaultdict to avoid key error https://stackoverflow.com/questions/5900578/how-does-collections-defaultdict-work:
+    by_number = defaultdict(list)
+    # append feature vectors to by_number until there are n_m of each digit
+    for i, feat in enumerate(features):
+        if len(by_number[labels[i]]) < n_m:
+            by_number[labels[i]].append(feat)
+    # convert each list of n_m feature vectors (for each digit) in by_number to np array
+    for i in range(10):
+        by_number[i] = np.array(by_number[i])
+
+    ## Enumerate the even vs. odd tasks
+    even_numbers = [0, 2, 4, 6, 8]
+    odd_numbers = [1, 3, 5, 7, 9]
+    # make list of all 25 pairs of (even, odd):
+    even_odd_pairs = list(itertools.product(even_numbers, odd_numbers))
+
+    ## Group data into 25 single even vs single odd tasks
+    all_tasks = []
+    for (e, o) in even_odd_pairs:
+        # eo_feautres: concatenate even feats, odd feats for each e,o pair:
+        eo_features = np.concatenate([by_number[e], by_number[o]], axis=0)
+        # (0,...,0, 1, ... ,1) labels of length 2*n_m corresponding to eo_features:
+        eo_labels = np.concatenate([np.ones(n_m), np.zeros(n_m)])
+        # concatenate eo_feautures and eo_labels into array of length 4*n_m:
+        eo_both = np.concatenate([eo_labels.reshape(-1, 1), eo_features], axis=1)
+        # add eo_both to all_tasks:
+        all_tasks.append(eo_both)
+    # all_tasks is a list of 25 ndarrays, each array corresponds to an (e,o) pair of digits (aka task) and is 10,842 (examples) x 101 (100=dim (features) plus 1 =dim(label))
+    # all_evens: concatenated array of 5*n_m ones and 5*n_m = 27,105 feauture vectors (n_m for each even digit):
+    all_evens = np.concatenate([np.ones((5 * n_m, 1)), np.concatenate([by_number[i] for i in even_numbers], axis=0)],
+                               axis=1)
+    # all_odds: same thing but for odds and with zeros instead of ones:
+    all_odds = np.concatenate([np.zeros((5 * n_m, 1)), np.concatenate([by_number[i] for i in odd_numbers], axis=0)],
+                              axis=1)
+    # combine all_evens and _odds into all_nums (contains all 10*n_m = 54210 training examples):
+    all_nums = np.concatenate([all_evens, all_odds], axis=0)
+
+    ## Mix individual tasks with overall task
+    # each worker m gets (1-p)* 2*n = (1-p)*10,842 examples from specific tasks and p*10,842 from mixture of all tasks.
+    # So p=1 -> homogeneous (zeta = 0); p=0 -> heterogeneous
+    features_by_machine = []
+    labels_by_machine = []
+    n_individual = int(np.round(2 * n_m * (1. - args.p)))  # int (1-p)*2n_m = (1-p)*10,842
+    n_all = 2 * n_m - n_individual  # =int p*2n_m  = p*10,842
+    for m, task_m in enumerate(all_tasks):  # m is btwn 0 and 24 inclusive
+        task_m_idxs = np.random.choice(task_m.shape[0],
+                                       size=n_individual)  # specific: randomly choose (1-p)*2n_m examples from 2*n_m = 10,842 examples for task m (one (e,o) pair)
+        all_nums_idxs = np.random.choice(all_nums.shape[0],
+                                         size=n_all)  # mixture of tasks: randomly choose p*2n_m examples from all 54,210 examples (all digits)
+        data_for_m = np.concatenate([task_m[task_m_idxs, :], all_nums[all_nums_idxs, :]],
+                                    axis=0)  # machine m gets 10,842 total examples: fraction p are mixed, 1-p are specific to task m (one eo pair)
+        features_by_machine.append(data_for_m[:, 1:])
+        labels_by_machine.append(data_for_m[:, 0])
+    features_by_machine = np.array(features_by_machine)  # array of all 25 feauture sets (each set has 10,842 feauture vectors)
+    labels_by_machine = np.array(labels_by_machine)  # array of corresponding label sets
+    ###Train/Test split for each machine###
+    train_features_by_machine = []
+    test_features_by_machine = []
+    train_labels_by_machine = []
+    test_labels_by_machine = []
+    for m, task_m in enumerate(all_tasks):
+        train_feat, test_feat, train_label, test_label = train_test_split(features_by_machine[m], labels_by_machine[m],
+                                                                          test_size=1/args.nSplit, random_state=1)
+        train_features_by_machine.append(train_feat)
+        test_features_by_machine.append(test_feat)
+        train_labels_by_machine.append(train_label)
+        test_labels_by_machine.append(test_label)
+    train_features_by_machine = np.array(train_features_by_machine)
+    test_features_by_machine = np.array(test_features_by_machine)
+    train_labels_by_machine = np.array(train_labels_by_machine)
+    test_labels_by_machine = np.array(test_labels_by_machine)
+    print(train_features_by_machine.shape)
+    return train_features_by_machine, train_labels_by_machine, test_features_by_machine, test_labels_by_machine, n_m
+
+class MLP(nn.Module):
+    def __init__(self, dim_in, dim_hidden, dim_out):
+        super(MLP, self).__init__()
+        self.layer_input = nn.Linear(dim_in, dim_hidden)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout()
+        self.layer_hidden = nn.Linear(dim_hidden, dim_out)
+
+    def forward(self, x):
+        x = self.layer_input(x)
+        x = self.dropout(x)
+        x = self.relu(x)
+        x = self.layer_hidden(x)
+        return x
+
