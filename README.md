@@ -25,12 +25,7 @@ To generate the noise, we can use MATLAB. noise_generator_localSGD2.m is used to
 To generate the noise for noisy SPIDER and noisy minibatch SGD, run main_FL.m in which noise_generator.m will be called. In main_FL.m, the parameters of the experiment: list of epsilons, list of clipping thresholds (Ls), number of samples (n), list of R values (Rs), and M should be modified based on the experiment setting.
  
 ## Model Training:
-To train the model with generated noises by MATLAB, run the code with the following command:
-```bash
-python DP_FL.py 
-```
-
-To train the model with generated noises by Python, run the code with the following command:
+To train the model, run the following command:
 ```bash
 python DP_FL2.py 
 ```
