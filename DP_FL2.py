@@ -565,7 +565,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
 
                 del local2
                 del net_local2
-                del grads2
 
                 loss_r_temp += (loss_total1 + loss_total2) / (2 * K * 1.)
 
