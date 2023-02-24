@@ -554,7 +554,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
                 local1 = LocalUpdate(args, train_features[m, idxs, :], train_labels[m, idxs])
                 net_local1 = copy.deepcopy(net_glob_prev)
                 paramTensorsNames1, grads1, loss_total1 = local1.train(net=net_local1.to(args.device))
-        #                 g_prev[m], LDictPrev[m] = clip_gradient(args, paramTensorsNames1, grads1, g_prev[m], L)
 
                 del local1
                 del net_local1
