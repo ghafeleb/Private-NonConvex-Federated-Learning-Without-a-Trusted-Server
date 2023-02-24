@@ -564,7 +564,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
                 g[m], LDict[m] = clip_gradient(args, paramTensorsNames2, grads2, g[m], L)
 
                 del local2
-                del net_local2
 
                 loss_r_temp += (loss_total1 + loss_total2) / (2 * K * 1.)
 
