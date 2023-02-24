@@ -562,9 +562,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
                 net_local2 = copy.deepcopy(net_glob)
                 paramTensorsNames2, grads2, loss_total2 = local2.train(net=net_local2.to(args.device))
                 g[m], LDict[m] = clip_gradient(args, paramTensorsNames2, grads2, g[m], L)
-
-                del local2
-
                 loss_r_temp += (loss_total1 + loss_total2) / (2 * K * 1.)
 
         net_glob_prev = copy.deepcopy(net_glob)
