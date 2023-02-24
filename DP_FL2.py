@@ -78,7 +78,6 @@ class LocalUpdate(object):
 
     def forward_input_CNN(self, conv1_weight, conv1_bias, conv2_weight, conv2_bias, fc1_weight, fc1_bias, fc2_weight,
                           fc2_bias, fc3_weight, fc3_bias):
-        # conv1_weight, conv1_bias, conv2_weight, conv2_bias, fc1_weight, fc1_bias, fc2_weight, fc2_bias, fc3_weight, fc3_bias
         pool = nn.MaxPool2d(2, 2)
 
         x = pool(F.relu(F.conv2d(self.features_vectors, weight=conv1_weight, bias=conv1_bias)))
