@@ -534,8 +534,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
         # randomly choose Mavail out of the Mavail clients:
         S = np.random.choice(list(range(M)), size=Mavail, replace=False, p=None)
         loss_r_temp = 0
-        # t = time.time()
-        loss_r_temp = 0
         g_prev = defaultdict(lambda: {})
         g = defaultdict(lambda: {})
         for m in S:
