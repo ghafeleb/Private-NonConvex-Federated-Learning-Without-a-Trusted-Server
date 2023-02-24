@@ -29,7 +29,6 @@ def get_iid_gauss_noise(layerSize, L, K, R, delta, n, eps, n_noise, noiseVersion
     elif noiseVersion == 2:
         scaleMultiplier = 8
     std_ = ((scaleMultiplier * (L ** 2) * K * R * (np.log(2 / (delta))) / (n ** 2 * eps ** 2))) ** 0.5
-    # return np.random.normal(loc=0, scale=(scaleMultiplier*(L**2)*R*(np.log(2/(delta)))/(n**2 * eps**2)), size=(n_noise, layerSize))
     return torch.randn(n_noise, layerSize) * std_
 
 
