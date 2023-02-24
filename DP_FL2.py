@@ -654,7 +654,6 @@ def test_err_cls(net_g, features_vectors, labels, args):
             correct += y_pred.eq(target.data.view_as(y_pred)).long().cpu().sum()
     test_loss /= (M * n)
     accuracy = 100.00 * correct.item() / (M * n)
-    # print('\nLoss: {:.4f} \nAccuracy: {}/{} or {:.2f}%\n'.format(test_loss, correct, M*n, accuracy))
     return [accuracy, test_loss]
 
 
