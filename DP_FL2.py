@@ -628,11 +628,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
             return losses, 'diverged', net_glob
         if counter_increase >= 25 or losses[-1] > losses[0] * 2:
             return losses, 'diverged', net_glob
-        del g
-        del g_prev
-        del g_avg
-    # # Plot the losses
-    # pltLoss(losses)
     return losses, 'converged', best_agent
 
 
