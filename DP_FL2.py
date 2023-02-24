@@ -389,7 +389,6 @@ def spider(args, L, M, Mavail, K, R, stepsize, train_features, train_labels, eps
                 net_local1 = copy.deepcopy(net_glob_1)
                 paramTensorsNames, grads1, _ = local1.train(net=net_local1.to(args.device))
                 g_1[m], LDict1[m] = clip_gradient(args, paramTensorsNames, grads1, g_1[m], L)
-            # Line 16 of Algorithm: Compute v^1
             g_avg_1 = {}
             if args.matlabNoise:            
                 for layer in list(g_1[S[0]].keys()):
