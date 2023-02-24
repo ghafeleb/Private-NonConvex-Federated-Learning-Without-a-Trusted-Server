@@ -19,10 +19,6 @@ Use the follwoing command to install the dependencies:
 pip install -r requirements.txt
 ```
 If you want to generate noises using MATLAB, installed MATLAB on the system is required. 
-
-## Generating noise:
-To generate the noise, we can use MATLAB. noise_generator_localSGD2.m is used to generate noises for noisy local SGD and no modification is required for it. 
-To generate the noise for noisy SPIDER and noisy minibatch SGD, run main_FL.m in which noise_generator.m will be called. In main_FL.m, the parameters of the experiment: list of epsilons, list of clipping thresholds (Ls), number of samples (n), list of R values (Rs), and M should be modified based on the experiment setting.
  
 ## Model Training:
 To train the model, run the following command:
