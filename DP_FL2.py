@@ -544,7 +544,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
                 paramTensorsNames, grads, loss_total = local.train(net=net_local.to(args.device))
                 del local
                 del net_local
-                del grads
                 loss_r_temp += (loss_total / (K * 1.))
             else:
                 idxs = np.random.randint(0, train_features[m].shape[0],
