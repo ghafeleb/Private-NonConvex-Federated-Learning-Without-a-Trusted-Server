@@ -150,8 +150,6 @@ class LocalUpdate(object):
 
 
 def local_sgd(args, L, M, Mavail, K, R, stepsize, train_features, train_labels, eps=0, delta=0, n=0, addNoise=False):
-    #    np.random.seed(seedGlobal)
-    #    torch.manual_seed(seedGlobal)
     counter_increase = 0  # Counts the number of times our loss is larger that loss in iteration 1.
     losses = []
 
