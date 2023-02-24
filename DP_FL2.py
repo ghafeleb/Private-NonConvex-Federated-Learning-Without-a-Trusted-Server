@@ -548,12 +548,9 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
             else:
                 idxs = np.random.randint(0, train_features[m].shape[0],
                                          K)  # draw minibatch (unif w/replacement) index set of size minibatch_size from machine m's dataset
-
                 local1 = LocalUpdate(args, train_features[m, idxs, :], train_labels[m, idxs])
                 net_local1 = copy.deepcopy(net_glob_prev)
                 paramTensorsNames1, grads1, loss_total1 = local1.train(net=net_local1.to(args.device))
-
-                del local1
                 local2 = LocalUpdate(args, train_features[m, idxs, :], train_labels[m, idxs])
                 net_local2 = copy.deepcopy(net_glob)
                 paramTensorsNames2, grads2, loss_total2 = local2.train(net=net_local2.to(args.device))
