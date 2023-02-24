@@ -777,8 +777,6 @@ def testModel(args, settings, K, seedData, train_features, train_labels, test_fe
             dfResultTest = {'algorithm': algName, 'data': args.data, 'train_test': 'test', 'eps': eps,
                             'stepsize': stepsize, 'stepsize_local': stepsize_local, 'L': L, 'qR': qR, 'seedData': seedData, 'accuracy': test_accuracy}
             dfResult = dfResult.append(dfResultTest, ignore_index=True)
-        else:
-            print('Skipped\n')
     return dfResult
 
               
