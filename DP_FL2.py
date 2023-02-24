@@ -430,7 +430,7 @@ def spider(args, L, M, Mavail, K, R, stepsize, train_features, train_labels, eps
             optimizer_1.step()
             net_glob_2 = copy.deepcopy(net_glob_1)
         LDict2 = {}
-        g_2 = {}  # g_2 = {'layer1': [...], 'layer2': [...]} gradients wrt parameters of each layer
+        g_2 = {}  
         loss_r_temp = 0  # Sums up loss of clients
         for m in S:
             g_2[m] = {}  # gradients of client m
