@@ -115,7 +115,7 @@ class LocalUpdate(object):
         # train and update
         losses = []
         optimizer = torch.optim.SGD(net.parameters(), lr=stepsize)
-        # optimizer = torch.optim.Adam(net.parameters(), lr=stepsize, weight_decay=float(self.args.wD))
+        optimizer = torch.optim.Adam(net.parameters(), lr=stepsize, weight_decay=float(self.args.wD))
         for features_vector, label in zip(self.features_vectors, self.labels):
             features_vector, label = features_vector.to(self.args.device).unsqueeze(0), label.to(
                 self.args.device).unsqueeze(0)
