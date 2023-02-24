@@ -555,7 +555,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
                 paramTensorsNames1, grads1, loss_total1 = local1.train(net=net_local1.to(args.device))
 
                 del local1
-                del net_local1
                 local2 = LocalUpdate(args, train_features[m, idxs, :], train_labels[m, idxs])
                 net_local2 = copy.deepcopy(net_glob)
                 paramTensorsNames2, grads2, loss_total2 = local2.train(net=net_local2.to(args.device))
