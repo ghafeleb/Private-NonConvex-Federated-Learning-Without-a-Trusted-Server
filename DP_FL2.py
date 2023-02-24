@@ -616,8 +616,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
         losses.append(loss_r_temp / Mavail)
         g_avg_prev = copy.deepcopy(g_avg)
         net_glob.zero_grad()
-        # for layer, param in net_glob.named_parameters():
-        #    param.grad = g_avg[layer]
         with torch.no_grad():
             for layer, param in net_glob.named_parameters():
                 param.sub_(stepsize * g_avg[layer])
