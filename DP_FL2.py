@@ -699,8 +699,6 @@ def getAlgoFunction(modelIdx):
                        41: spider_boost, 42: spider_boost, 51: fedAvg, 52: fedAvg}
     return algFunctionDict[modelIdx]
 
-
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 def getAddress(args, epsilon, modelIdx, K, L, stepsize, stepsize_local, seedData, qR=0):
     alg_name = getAlgoName(modelIdx)
 
@@ -712,7 +710,6 @@ def getAddress(args, epsilon, modelIdx, K, L, stepsize, stepsize_local, seedData
         return 'CIFAR10_' + alg_name + '_v7_p={:.2f}_q={:g}_K={:d}_R={:d}_M={:d}_Mavail={:d}_eps={:.2f}_L={:.8g}_stepsize={:.8g}_stepsizeL={:.8g}_sM={:.8g}_sD={:.8g}_nSt={:.8g}_nStL={:.8g}_qR={:.8g}'.format(
             args.p, args.q_pct_of_data, K, args.R, args.M, args.Mavail, epsilon, L, stepsize, stepsize_local, args.seedModel, seedData,
             args.nStepsize, args.nStepsizeL, qR)
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 def getSettings(args):
     settings = []
