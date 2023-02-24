@@ -614,8 +614,6 @@ def spider_boost(args, L, M, Mavail, K, R, stepsize, train_features, train_label
                 g_avg[layer].add_(g_avg_prev[layer])
 
         losses.append(loss_r_temp / Mavail)
-        # print(f"Computation time for layer {layer} with {x_len} parameters: {((time.time()-t_now)/60):.4g} minute(s)")
-        # print(f"Computation time of average of gradients + adding noise: {((time.time() - t) / 60):.4g} minute(s)")
         g_avg_prev = copy.deepcopy(g_avg)
         net_glob.zero_grad()
         # for layer, param in net_glob.named_parameters():
