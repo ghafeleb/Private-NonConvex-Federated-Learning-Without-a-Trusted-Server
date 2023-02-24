@@ -863,7 +863,6 @@ if __name__ == '__main__':
 
     for argKey, argValue in args.__dict__.items():
         print(f"{argKey}: {argValue}")
-    print('\n')
 
     for args.R in args.RList:
         for seed in range(args.nSeedData):
