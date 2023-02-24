@@ -832,7 +832,7 @@ def main(args, seed):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--nSeedData', default=10, type=int, help='Number of randomness seeds')  
+    parser.add_argument('--seed', default=10, type=int)  
     parser.add_argument('--gpu', default=9, type=int, help='if -1 then CPU otherwise GPU')
     parser.add_argument('--clipping', default=1, type=int, help='1: Grid search clipping threshold. 2: Heuristic clipping threshold. OW: no clipping')
     parser.add_argument('--matlabNoise', type=bool, default=False)
@@ -865,7 +865,6 @@ if __name__ == '__main__':
         print(f"{argKey}: {argValue}")
 
     for args.R in args.RList:
-        for seed in range(args.nSeedData):
-            main(args, copy.deepcopy(seed))
+        main(args, args.seed)
 
 
