@@ -495,9 +495,7 @@ def spider(args, L, M, Mavail, K, R, stepsize, train_features, train_labels, eps
             minLoss = losses[-1]
             best_agent = copy.deepcopy(net_glob_2)
 
-        print(f"Round {r} computation time: {((time.time() - t_round) / 60):.4g} minutes")
-    # # Plot the losses
-    # plt.plot(losses)
+        print(f"Round {r} computation time: {((time.time() - t_round) / 60):.4g} minutes
     return losses, 'converged', best_agent
 
 
