@@ -456,7 +456,6 @@ def spider(args, L, M, Mavail, K, R, stepsize, train_features, train_labels, eps
         if args.matlabNoise:
             for layer in list(g_2[S[0]].keys()):
                 idxNoise = 2 # noise type
-                # print(noise2_idx[layer], noise_bucket_size)
                 if noise2_idx[layer] >= noise_bucket_size:
                     noise2_file_idx += 1
                     noise2_dict, noise2_idx = load_noise(idxNoise, layers_set, noise2_file_idx, delta, L, n, R, Mavail, eps, args.seedModel)
