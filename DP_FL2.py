@@ -649,7 +649,6 @@ def test_err_cls(net_g, features_vectors, labels, args):
             test_loss += loss_func(net_preds, target).item()
             # get the index of the max log-probability
             y_pred = net_preds.data.max(1, keepdim=True)[1]
-            # print(f"target: {target}, y_pred: {y_pred}")
             correct += y_pred.eq(target.data.view_as(y_pred)).long().cpu().sum()
     test_loss /= (M * n)
     accuracy = 100.00 * correct.item() / (M * n)
