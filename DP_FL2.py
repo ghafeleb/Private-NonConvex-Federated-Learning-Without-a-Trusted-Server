@@ -725,7 +725,6 @@ def trainModel(args, settings, K, seedData, delta, n, train_features, train_labe
             checked_trainings.add(model_path)
             print('Algorithm: {:s},\tEpsilon: {:.5f}, Stepsize: {:.5f}, Stepsize local: {:.5f}, L: {:.5f}, qR: {:.5f}'.format(algName, eps,
                                                                                                       stepsize, stepsize_local, L, qR))
-            print('Path: ', model_path)
             t_now = time.time()
             if modelIdx in [11, 21, 31]:
                 l, success, net = algoFunction(args, L, args.M, args.Mavail, K, args.R, stepsize, train_features,
