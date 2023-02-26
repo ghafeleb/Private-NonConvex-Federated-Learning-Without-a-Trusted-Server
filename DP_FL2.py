@@ -801,7 +801,6 @@ def main(args, seed):
     print(f"Number of examples per machine: {n}")
 
     K = int(max(1, n * math.sqrt(args.K_constant) / (2 * math.sqrt(args.R))))  # needed for privacy by advanced comp; 24 = largest epsilon that we test
-    print(f'K: {K}')
 
     delta = 1 / (n ** 2)
 
